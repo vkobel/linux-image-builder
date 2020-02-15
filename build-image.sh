@@ -38,14 +38,17 @@ sudo cp -r $ROOTFS_DIR/* $TMP_DIR
 sudo cp $LINUX_KERNEL $TMP_DIR/vmlinuz
 
 # Create and copy the initramfs CPIO archive
+cp config/init $INITRAMFS_DIR
+mkdir -p $INITRAMFS_DIR/{bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys}
 cd $INITRAMFS_DIR
 find . -print0 | cpio --null --create --verbose --format=newc | sudo sh -c "gzip --best > $TMP_DIR/initramfs.cpio.gz"
 cd -
 
 # Copy and init the Syslinux bootloader
+sudo mkdir -p $TMP_DIR/{boot,lib/modules}
 sudo cp $SYSLINUX_DIR/bios/*.c32 $TMP_DIR/boot
 sudo extlinux --install $TMP_DIR/boot
-sudo cp syslinux.cfg $TMP_DIR/boot
+sudo cp config/syslinux.cfg $TMP_DIR/boot
 
 echo Bootable image successfully created: $IMG!
 exit 0
