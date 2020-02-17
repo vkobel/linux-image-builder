@@ -48,14 +48,17 @@ qemu-system-x86_64 -drive file=test.ext4,if=virtio,format=raw --nographic \
 
 ## Extra steps to build the components
 ### Build the Linux kernel
-1. Clone the linux kernel source code: `git clone https://github.com/torvalds/linux.git`.
+1. Clone the Linux kernel source code: `git clone https://github.com/torvalds/linux.git`.
 2. Checkout the version you want to use: `git checkout v5.6-rc1`.
 3. Run `make menuconfig` to have the nice TUI (or you can use my `.config` file from the config directory).
 4. Run `make -j$(nproc || echo -n 1)` to compile the kernel.
 5. The compressed kernel image can be usually found in `linux/arch/x86/boot/bzImage`, this is the one to point the script to for the "kernel bzImage".
 
 ### Build the initramfs with Busybox
-TODO
+1. Clone the Busybox repository: `git clone git://git.busybox.net/busybox`
+2. Chekout the version you want to target (here the latest stable at time of writing): `git checkout 1_31_stable`
+3. Run `make menuconfig` to have the nice TUI, and activate the `Settings -> Build static binary (no shared libs)` option. This sets the flag `CONFIG_STATIC=y` in the `.config` file.
+4. Run `make install -j$(nproc || echo -n 1)` to compile Busybox, and make it produce the nice root filesystem we are expecting under the `busybox/_install` folder.
 
 ### Build the root filesystem from a Docker image
 TODO
