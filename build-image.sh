@@ -27,7 +27,7 @@ SYSLINUX_DIR=$5
 [ -z "$(ls -A $ROOTFS_DIR)" ] && exit 1
 [ -z "$(ls -A $SYSLINUX_DIR)" ] && exit 1
 
-dd if=/dev/zero of=$IMG bs=1M count=75
+dd if=/dev/zero of=$IMG bs=1M count=50
 mkfs.ext4 $IMG
 sudo mount $IMG $TMP_DIR
 
