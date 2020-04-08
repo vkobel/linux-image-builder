@@ -74,15 +74,15 @@ ip route add default via 172.16.0.1 dev eth0
 
 ## Extra steps to build the components
 ### Build the Linux kernel (deps/linux/arch/x86/boot/bzImage)
-1. Clone the Linux kernel source code: `git clone https://github.com/torvalds/linux.git`.
-2. Checkout the version you want to use: `git checkout v5.6-rc1`.
+1. Clone the Linux kernel source code: `git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/linux.git`.
+2. Checkout the version you want to use: `git checkout v5.6.3`.
 3. Run `make menuconfig` to have the nice TUI (or you can use my `.config` file from the config directory).
 4. Run `make -j$(nproc || echo -n 1)` to compile the kernel.
 5. The compressed kernel image can be usually found in `linux/arch/x86/boot/bzImage`, this is the one to point the script to for the "kernel bzImage".
 
 ### Build the initramfs with Busybox (deps/initramfs)
 1. Clone the Busybox repository: `git clone git://git.busybox.net/busybox`
-2. Chekout the version you want to target (here the latest stable at time of writing): `git checkout 1_31_stable`
+2. Checkout the version you want to target (here the latest stable at time of writing): `git checkout 1_31_stable`
 3. Run `make menuconfig` to have the nice TUI, and activate the `Settings -> Build static binary (no shared libs)` option. This sets the flag `CONFIG_STATIC=y` in the `.config` file.
 4. Run `make install -j$(nproc || echo -n 1)` to compile Busybox, and make it produce the nice root filesystem we are expecting under the `busybox/_install` folder.
 
