@@ -12,5 +12,6 @@ umount /proc
 umount /sys
 umount /dev
 
+echo "That's it for init!"
 # Boot the real thing.
 exec switch_root /mnt/root /sbin/init
